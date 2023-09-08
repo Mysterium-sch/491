@@ -32,12 +32,11 @@ int main(int argc, char** argv) {
 		//printf("Nsignals = %d, nsamples = %d\n", w->nsignals, w->nsamples);
 	}
 	int cur = 3;
-	int mosi[w->nsamples];
-	int miso[w->nsamples];
-	int count_mosi = 0;
-	int count_miso = 0;
+	int mosi[16];
+	int miso[16];
 	bool read = false;
-	unsigned int clk = signal_at_idx(w,o,4);
+	int reads = -1;
+	unsigned int clk = signal_at_idx(w,0,4);
 	bool CPHA_first = false;
 		if (signal_at_idx(w,0,5) == 0) { CPHA_first = true; }
 	unsigned int CPHA = signal_at_idx(w,5,0);
@@ -50,35 +49,36 @@ int main(int argc, char** argv) {
 				clk = value;
 				if(CPHA_first || (clk==(1-CPHA) && signal_at_idx(w,0,cur+1)==CPHA)) {
 					read = true;
+					reads = reads + 1;
 					CPHA_first = false;
 				} else {
 					read = false;
 				}
 			}
 			if(k==1 && read) {
-				mosi[count_mosi] = value;
-				count_mosi = count_mosi + 1;
+				mosi[reads] = value;
 			} else if (k==2 && read) {
-				miso[count_miso] = value;
-				count_miso = count_miso +1;
+				miso[reads] = value;
 			}
 	
 		}
 		cur = cur + 1; 
-		                        if(count_mosi % 16 == 0 && read) {
-                                int R_W = mosi[count_mosi-10]; 
-                                //int stream = mosi[count_mosi-9];
-                                int address = mosi[count_mosi-16] + 2*mosi[count_mosi-15] + 4*mosi[count_mosi-14] + 8*mosi[count_mosi-13] + 16*mosi[count_mosi-12] + 32*mosi[count_mosi-11];
-				int value_wr = mosi[count_mosi-8] + 2*mosi[count_mosi-7] + 4*mosi[count_mosi-6] + 8*mosi[count_mosi-5] + 16*mosi[count_mosi-4] + 32*mosi[count_mosi-3] + 64*mosi[count_mosi-3] + 128*mosi[count_mosi-1];
-				int value_rd = miso[count_miso-8] + 2*miso[count_miso-7] + 4*miso[count_miso-6] + 8*miso[count_miso-5] + 16*miso[count_miso-4] + 32*miso[count_miso-3] + 64*miso[count_miso-3] + 128*miso[count_miso-1];
-                                if(R_W == 0) {
-					printf("RD %x %x\n", address, value_rd);
+
+		if(reads==15) {
+		                int R_W = mosi[reads-9]; 
+                                //int stream = mosi[reads-8];
+                                int address = mosi[reads-10] + 2*mosi[reads-11] + 4*mosi[reads-12] + 8*mosi[reads-13] + 16*mosi[reads-14] + 32*mosi[reads-15]; 
+                                int value_wr = mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
+                                int value_rd = miso[reads] + 2*miso[reads-1] + 4*miso[reads-2] + 8*miso[reads-3] + 16*miso[reads-4] + 32*miso[reads-5] + 64*miso[reads-6] + 128*miso[reads-7];
+                               if(R_W == 0) {
+					printf("RD %02x %02x\n", address, value_rd);
 				} else {
-					printf("WR %x %x\n", address, value_wr);
+					printf("WR %02x %02x\n", address, value_wr);
 				}
-				}
+			       reads = -1;
+		}
+		
 	}
-	printf("end program\n");
 
 	free_waves(w);
 	return 0;
