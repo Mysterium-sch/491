@@ -36,10 +36,15 @@ int main(int argc, char** argv) {
 	int miso[16];
 	bool read = false;
 	int reads = -1;
-	unsigned int clk = signal_at_idx(w,0,4);
-	bool CPHA_first = false;
-		if (signal_at_idx(w,0,5) == 0) { CPHA_first = true; }
+	unsigned int CPOL = signal_at_idx(w,4,0);
+	unsigned int clk = CPOL;
+	bool first = false;
 	unsigned int CPHA = signal_at_idx(w,5,0);
+
+	if(CPHA == 0) {
+		first = true;
+	}
+
 	for (unsigned int j = 0; j < w->nsamples-4; j++) {
 		int cur_sig = 0;
 		for (unsigned int k = 0; k<w->nsignals; k++) {
@@ -47,10 +52,10 @@ int main(int argc, char** argv) {
 			cur_sig = cur_sig + 1;
 			if(k==0) {
 				clk = value;
-				if(CPHA_first || (clk==(1-CPHA) && signal_at_idx(w,0,cur+1)==CPHA)) {
+				if(first || (CPOL==CPHA && (clk==1 && signal_at_idx(w,0,cur+1)==0)) || (CPOL!=CPHA && (clk==0 && signal_at_idx(w,0,cur+1)==1))) {
 					read = true;
 					reads = reads + 1;
-					CPHA_first = false;
+					first = false;
 				} else {
 					read = false;
 				}
