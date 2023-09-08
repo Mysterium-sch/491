@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include "waves.h"
 
+int hex(int,int,int,int,int,int);
+
 int main(int argc, char** argv) {
 	/* This macro silences compiler errors about unused variables. */
 	UNUSED(argc);
@@ -29,42 +31,56 @@ int main(int argc, char** argv) {
 		log("\t* %s (%i bits)\n", index2signal(w, i), w->widths[i]);
 		//printf("Nsignals = %d, nsamples = %d\n", w->nsignals, w->nsamples);
 	}
-	int cur = 0;
+	int cur = 3;
 	int mosi[w->nsamples];
 	int miso[w->nsamples];
 	int count_mosi = 0;
 	int count_miso = 0;
-	for (unsigned int j = 0; j < w->nsamples; j++) {
+	bool read = false;
+	unsigned int clk = signal_at_idx(w,o,4);
+	bool CPHA_first = false;
+		if (signal_at_idx(w,0,5) == 0) { CPHA_first = true; }
+	unsigned int CPHA = signal_at_idx(w,5,0);
+	for (unsigned int j = 0; j < w->nsamples-4; j++) {
 		int cur_sig = 0;
 		for (unsigned int k = 0; k<w->nsignals; k++) {
 			uint32_t value = signal_at_idx(w,cur_sig,cur);
 			cur_sig = cur_sig + 1;
-			if(k==1) {
-				mosi[count_mosi] = value;
-				count_mosi = count_mosi + 1;
-			} else if (k==2) {
-				miso[count_miso] = value;
-				printf("%i\t", miso[count_miso]);
-			}
-			if(count_mosi % 8 == 0) {
-				int R_W = mosi[count_mosi-1];
-				int stream = mosi[count_mosi];
-				int address = hex(mosi[count_mosi-7], mosi[count_mosi-6],mosi[count_mosi-5], mosi[count_mosi-4],mosi[count_mosi-3], mosi[count_mosi-2]);
-				if(R_W == 0) {
+			if(k==0) {
+				clk = value;
+				if(CPHA_first || (clk==(1-CPHA) && signal_at_idx(w,0,cur+1)==CPHA)) {
+					read = true;
+					CPHA_first = false;
+				} else {
+					read = false;
 				}
 			}
+			if(k==1 && read) {
+				mosi[count_mosi] = value;
+				count_mosi = count_mosi + 1;
+			} else if (k==2 && read) {
+				miso[count_miso] = value;
+				count_miso = count_miso +1;
+			}
+	
 		}
 		cur = cur + 1; 
-	
+		                        if(count_mosi % 16 == 0 && read) {
+                                int R_W = mosi[count_mosi-10]; 
+                                //int stream = mosi[count_mosi-9];
+                                int address = mosi[count_mosi-16] + 2*mosi[count_mosi-15] + 4*mosi[count_mosi-14] + 8*mosi[count_mosi-13] + 16*mosi[count_mosi-12] + 32*mosi[count_mosi-11];
+				int value_wr = mosi[count_mosi-8] + 2*mosi[count_mosi-7] + 4*mosi[count_mosi-6] + 8*mosi[count_mosi-5] + 16*mosi[count_mosi-4] + 32*mosi[count_mosi-3] + 64*mosi[count_mosi-3] + 128*mosi[count_mosi-1];
+				int value_rd = miso[count_miso-8] + 2*miso[count_miso-7] + 4*miso[count_miso-6] + 8*miso[count_miso-5] + 16*miso[count_miso-4] + 32*miso[count_miso-3] + 64*miso[count_miso-3] + 128*miso[count_miso-1];
+                                if(R_W == 0) {
+					printf("RD %x %x\n", address, value_rd);
+				} else {
+					printf("WR %x %x\n", address, value_wr);
+				}
+				}
 	}
+	printf("end program\n");
 
 	free_waves(w);
 	return 0;
 }
 
-int hex(int b1, int b2, int b3, int b4, int b5, int b6) {
-	int total
-
-
-	return total;
-}
