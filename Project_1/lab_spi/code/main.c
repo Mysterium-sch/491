@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 				if(first || (CPOL==CPHA && (clk==1 && signal_at_idx(w,0,cur+1)==0)) || (CPOL!=CPHA && (clk==0 && signal_at_idx(w,0,cur+1)==1))) {
 					read = true;
 					reads = reads + 1;
-					if(reads > 15) {
+					if(stream_length>0) {
 						cur_stream = cur_stream + 1;
 					}
 					first = false;
@@ -79,27 +79,99 @@ int main(int argc, char** argv) {
 		}
 		cur = cur + 1; 
 
-		if(reads==15 || ((cur_stream/7)>=1 && reads<15)) {
+		if(reads==15 || (cur_stream/7)>=1) {
 			if(reads == 15) {
 		                R_W = mosi[reads-9]; 
                                 stream = mosi[reads-8];
 				if(stream == 1) {
-					stream_length = mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
+					stream_length = 13;
+
+//mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
+				
+					for(tr=1; tr<=stream_length; tr++) {
+						value_wr[tr] = signal_at_idx(w,1,cur+(tr*8)) + 2*signal_at_idx(w,1,cur+(tr*8 -1)) + 4*signal_at_idx(w,1,cur+(tr*8 -2)) + 8*signal_at_idx(w,1,cur+(tr*5))+ 16*signal_at_idx(w,1,cur+(tr*4))+ 32*signal_at_idx(w,1,cur+(tr*3))+ 64*signal_at_idx(w,1,cur+2)+ 128*signal_at_idx(w,1,cur+1)+ 256*signal_at_idx(w,1,cur);
+						//cur+(8*tr-x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				}
                                 address = mosi[reads-10] + 2*mosi[reads-11] + 4*mosi[reads-12] + 8*mosi[reads-13] + 16*mosi[reads-14] + 32*mosi[reads-15]; 
 			}
-			if(stream == 0) {
-				value_wr[cur_stream/7] = mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
-				value_rd[cur_stream/7] = miso[reads] + 2*miso[reads-1] + 4*miso[reads-2] + 8*miso[reads-3] + 16*miso[reads-4] + 32*miso[reads-5] + 64*miso[reads-6] + 128*miso[reads-7];
+			if(stream==0 || cur_stream>=1) {
+				value_wr[(cur_stream/7) - stream] = mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
+				value_rd[(cur_stream/7) - stream] = miso[reads] + 2*miso[reads-1] + 4*miso[reads-2] + 8*miso[reads-3] + 16*miso[reads-4] + 32*miso[reads-5] + 64*miso[reads-6] + 128*miso[reads-7];
 			}
 				if(R_W == 0 && (cur_stream/7)==stream_length) {
-					printf("RD %02x", address);
+					if(stream_length>=1) {
+						printf("RD STREAM %02x", address);
+
+					}
+					else {
+						printf("RD %02x", address);
+					}
                                 	for(int w=0; w<=(cur_stream/7); w++) {
                                         	printf(" %02x", value_rd[w]);
                                 	}
                                 printf("\n");
 				} else if ((cur_stream/7)==stream_length) {
-					printf("WR %02x", address);
+					if(stream_length>=1) {
+                                        	printf("WR STREAM %02x", address);
+                                        }
+                                        else {
+                                             printf("WR %02x", address);
+                                        }    
                                 	for(int z=0; z<=(cur_stream/7);z++) {
                                 		printf(" %02x", value_wr[z]);
                                 	}
