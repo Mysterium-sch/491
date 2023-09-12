@@ -46,11 +46,10 @@ int main(int argc, char** argv) {
         int value_wr[w->nsamples];
         int value_rd[w->nsamples];
 	int stream_length = 0;
-
+	int nextcur = 0;
 	if(CPHA == 0) {
 		first = true;
 	}
-
 	for (unsigned int j = 0; j < w->nsamples-4; j++) {
 		int cur_sig = 0;
 		for (unsigned int k = 0; k<w->nsignals; k++) {
@@ -58,10 +57,11 @@ int main(int argc, char** argv) {
 			cur_sig = cur_sig + 1;
 			if(k==0) {
 				clk = value;
-				if(first || (CPOL==CPHA && (clk==1 && signal_at_idx(w,0,cur+1)==0)) || (CPOL!=CPHA && (clk==0 && signal_at_idx(w,0,cur+1)==1))) {
+				if(first || (CPOL==CPHA && (clk==1 && signal_at_idx(w,0,cur+1)==0)) || (CPOL!=CPHA && (clk==0 && signal_at_idx(w,0,cur+1)==1)) || ((clk==1 && signal_at_idx(w,0,cur+1)==0) && signal_at_idx(w,3,cur+1)==1)) {
 					read = true;
 					reads = reads + 1;
 					first = false;
+					nextcur = cur+1;
 				} else {
 					read = false;
 				}
@@ -77,8 +77,13 @@ int main(int argc, char** argv) {
 	
 	}
 	
+	mosi[reads+1] =  signal_at_idx(w,1,nextcur+1);
+	miso[reads+1] =  signal_at_idx(w,2,nextcur+1);
+	
+	
+	
 	int inter = -1;
-	for(int why=-1; why<=reads; why++) {
+	for(int why=-1; why<=reads+1; why++) {
 	
 	if(inter == 15) {
 				inter = -1;
