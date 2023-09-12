@@ -74,58 +74,60 @@ int main(int argc, char** argv) {
 	
 		}
 		cur = cur + 1; 
-
-		if(reads==15) {
-		                R_W = mosi[reads-9]; 
-                                stream = mosi[reads-8];
-				address = mosi[reads-10] + 2*mosi[reads-11] + 4*mosi[reads-12] + 8*mosi[reads-13] + 16*mosi[reads-14] + 32*mosi[reads-15]; 
+	
+	}
+	
+	int inter = -1;
+	for(int why=-1; why<=reads; why++) {
+	
+	if(inter == 15) {
+				inter = -1;
+		                R_W = mosi[why-9]; 
+                                stream = mosi[why-8];
+				address = mosi[why-10] + 2*mosi[why-11] + 4*mosi[why-12] + 8*mosi[why-13] + 16*mosi[why-14] + 32*mosi[why-15]; 
 				if(stream == 1) {
 					//Pull next stream_length mosi/miso values
-					stream_length = 13;
-
-			//mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
-				
-					for(tr=1; tr<=stream_length; tr++) {
-						value_wr[tr] = signal_at_idx(w,1,cur+(tr*8)) + 2*signal_at_idx(w,1,cur+(tr*8 -1)) + 4*signal_at_idx(w,1,cur+(tr*8 -2)) + 8*signal_at_idx(w,1,cur+(tr*8 -3))+ 16*signal_at_idx(w,1,cur+(tr*8 -4))+ 32*signal_at_idx(w,1,cur+(tr*8 -5))+ 64*signal_at_idx(w,1,cur+(tr*8 -6))+ 128*signal_at_idx(w,1,cur+(tr*8 -7))+ 256*signal_at_idx(w,1,cur+(tr*8 -8));
-						value_rd[tr] = signal_at_idx(w,2,cur+(tr*8)) + 2*signal_at_idx(w,2,cur+(tr*8 -1)) + 4*signal_at_idx(w,2,cur+(tr*8 -2)) + 8*signal_at_idx(w,2,cur+(tr*8 -3))+ 16*signal_at_idx(w,2,cur+(tr*8 -4))+ 32*signal_at_idx(w,2,cur+(tr*8 -5))+ 64*signal_at_idx(w,2,cur+(tr*8 -6))+ 128*signal_at_idx(w,2,cur+(tr*8 -7))+ 256*signal_at_idx(w,2,cur+(tr*8 -8));
+					stream_length = mosi[why] + 2*mosi[why-1] + 4*mosi[why-2] + 8*mosi[why-3] + 16*mosi[why-4] + 32*mosi[why-5] + 64*mosi[why-6] + 128*mosi[why-7];
+					for(int tr=1; tr<stream_length+1; tr++) {
+						value_wr[tr-1] = mosi[why+(tr*8)] + 2*mosi[why+(tr*8-1)] + 4*mosi[why+(tr*8-2)] + 8*mosi[why+(tr*8-3)] + 16*mosi[why+(tr*8-4)] + 32*mosi[why+(tr*8-5)] + 64*mosi[why+(tr*8-6)] + 128*mosi[why+(tr*8-7)];
+						value_rd[tr-1] = miso[why+(tr*8)] + 2*miso[why+(tr*8-1)] + 4*miso[why+(tr*8-2)] + 8*miso[why+(tr*8-3)] + 16*miso[why+(tr*8-4)] + 32*miso[why+(tr*8-5)] + 64*miso[why+(tr*8-6)] + 128*miso[why+(tr*8-7)];
 					}
-					cur = cur + stream_length*8;
+					why = why + stream_length*8;
 				} else {
-				value_wr[0] = mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
-				value_rd[0] = miso[reads] + 2*miso[reads-1] + 4*miso[reads-2] + 8*miso[reads-3] + 16*miso[reads-4] + 32*miso[reads-5] + 64*miso[reads-6] + 128*miso[reads-7];
+				value_wr[0] = mosi[why] + 2*mosi[why-1] + 4*mosi[why-2] + 8*mosi[why-3] + 16*mosi[why-4] + 32*mosi[why-5] + 64*mosi[why-6] + 128*mosi[why-7];
+				value_rd[0] = miso[why] + 2*miso[why-1] + 4*miso[why-2] + 8*miso[why-3] + 16*miso[why-4] + 32*miso[why-5] + 64*miso[why-6] + 128*miso[why-7];
 				}
 			// Print command
 				if(R_W == 0) {
 					if(stream_length>=1) {
 						printf("RD STREAM %02x", address);
-					}
-					else {
-						printf("RD %02x", address);
-					}
-                                	for(int w=0; w<=stream_length; w++) {
+						for(int w=0; w<stream_length; w++) {
                                         	printf(" %02x", value_rd[w]);
                                 	}
+					}
+					else {
+						printf("RD %02x %02x", address, value_rd[0]);
+					}
                                 printf("\n");
 				} else {
 					if(stream_length>=1) {
                                         	printf("WR STREAM %02x", address);
-                                        }
-                                        else {
-                                             printf("WR %02x", address);
-                                        }    
-                                	for(int z=0; z<=stream_length;z++) {
+                                        	for(int z=0; z<stream_length;z++) {
                                 		printf(" %02x", value_wr[z]);
                                 	}
+                                        }
+                                        else {
+                                             printf("WR %02x %02x", address, value_wr[0]);
+                                        }    
+                     
                                 	printf("\n");
 				}
-			       if(reads==15) {
-			       	reads = -1;
+				why = why-1;
 				stream_length = 0;
-				}
+		} else {
+		inter = inter +1;
 		}
-		
-	}
-
+}
 	free_waves(w);
 	return 0;
 }
