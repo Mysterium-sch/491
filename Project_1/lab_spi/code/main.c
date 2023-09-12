@@ -89,6 +89,7 @@ int main(int argc, char** argv) {
 						value_wr[tr] = signal_at_idx(w,1,cur+(tr*8)) + 2*signal_at_idx(w,1,cur+(tr*8 -1)) + 4*signal_at_idx(w,1,cur+(tr*8 -2)) + 8*signal_at_idx(w,1,cur+(tr*8 -3))+ 16*signal_at_idx(w,1,cur+(tr*8 -4))+ 32*signal_at_idx(w,1,cur+(tr*8 -5))+ 64*signal_at_idx(w,1,cur+(tr*8 -6))+ 128*signal_at_idx(w,1,cur+(tr*8 -7))+ 256*signal_at_idx(w,1,cur+(tr*8 -8));
 						value_rd[tr] = signal_at_idx(w,2,cur+(tr*8)) + 2*signal_at_idx(w,2,cur+(tr*8 -1)) + 4*signal_at_idx(w,2,cur+(tr*8 -2)) + 8*signal_at_idx(w,2,cur+(tr*8 -3))+ 16*signal_at_idx(w,2,cur+(tr*8 -4))+ 32*signal_at_idx(w,2,cur+(tr*8 -5))+ 64*signal_at_idx(w,2,cur+(tr*8 -6))+ 128*signal_at_idx(w,2,cur+(tr*8 -7))+ 256*signal_at_idx(w,2,cur+(tr*8 -8));
 					}
+					cur = cur + stream_length*8;
 				} else {
 				value_wr[0] = mosi[reads] + 2*mosi[reads-1] + 4*mosi[reads-2] + 8*mosi[reads-3] + 16*mosi[reads-4] + 32*mosi[reads-5] + 64*mosi[reads-6] + 128*mosi[reads-7];
 				value_rd[0] = miso[reads] + 2*miso[reads-1] + 4*miso[reads-2] + 8*miso[reads-3] + 16*miso[reads-4] + 32*miso[reads-5] + 64*miso[reads-6] + 128*miso[reads-7];
