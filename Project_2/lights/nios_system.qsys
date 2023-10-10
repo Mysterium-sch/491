@@ -6,7 +6,7 @@
    version="1.0"
    description=""
    tags=""
-   categories="" />
+   categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
    element clk_0
@@ -29,7 +29,39 @@
    {
       datum baseAddress
       {
+         value = "268439584";
+         type = "String";
+      }
+   }
+   element keys
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+   element keys.s1
+   {
+      datum baseAddress
+      {
          value = "268439552";
+         type = "String";
+      }
+   }
+   element leds
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element leds.s1
+   {
+      datum baseAddress
+      {
+         value = "268439568";
          type = "String";
       }
    }
@@ -95,7 +127,7 @@
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="lockedInterfaceDefinition" value="" />
  <parameter name="maxAdditionalLatency" value="1" />
- <parameter name="projectName" value="" />
+ <parameter name="projectName" value="lights.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
  <parameter name="testBenchDutName" value="" />
@@ -103,6 +135,16 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface
+   name="keys"
+   internal="keys.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="leds"
+   internal="leds.external_connection"
+   type="conduit"
+   dir="end" />
  <interface
    name="new_sdram_controller_0_wire"
    internal="new_sdram_controller_0.wire"
@@ -134,6 +176,34 @@
   <parameter name="useRelativePathForSimFile" value="false" />
   <parameter name="writeBufferDepth" value="64" />
   <parameter name="writeIRQThreshold" value="8" />
+ </module>
+ <module name="keys" kind="altera_avalon_pio" version="18.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="3" />
+ </module>
+ <module name="leds" kind="altera_avalon_pio" version="18.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="26" />
  </module>
  <module
    name="new_sdram_controller_0"
@@ -188,7 +258,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='new_sdram_controller_0.s1' start='0x8000000' end='0x10000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x10000800' end='0x10001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x10001000' end='0x10001008' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='new_sdram_controller_0.s1' start='0x8000000' end='0x10000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x10000800' end='0x10001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='keys.s1' start='0x10001000' end='0x10001010' type='altera_avalon_pio.s1' /><slave name='leds.s1' start='0x10001010' end='0x10001020' type='altera_avalon_pio.s1' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x10001020' end='0x10001028' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -374,7 +444,7 @@
    start="nios2_gen2_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x10001000" />
+  <parameter name="baseAddress" value="0x10001020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -393,6 +463,24 @@
    end="new_sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x08000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="18.1"
+   start="nios2_gen2_0.data_master"
+   end="leds.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10001010" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="18.1"
+   start="nios2_gen2_0.data_master"
+   end="keys.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10001000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -439,6 +527,16 @@
    start="sys_sdram_pll_0.sys_clk"
    end="jtag_uart_0.clk" />
  <connection
+   kind="clock"
+   version="18.1"
+   start="sys_sdram_pll_0.sys_clk"
+   end="leds.clk" />
+ <connection
+   kind="clock"
+   version="18.1"
+   start="sys_sdram_pll_0.sys_clk"
+   end="keys.clk" />
+ <connection
    kind="interrupt"
    version="18.1"
    start="nios2_gen2_0.irq"
@@ -470,6 +568,8 @@
    version="18.1"
    start="clk_0.clk_reset"
    end="jtag_uart_0.reset" />
+ <connection kind="reset" version="18.1" start="clk_0.clk_reset" end="leds.reset" />
+ <connection kind="reset" version="18.1" start="clk_0.clk_reset" end="keys.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />

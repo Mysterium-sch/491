@@ -1,0 +1,125 @@
+///*
+// * "Hello World" example.
+// *
+// * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
+// * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
+// * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
+// * device in your system's hardware.
+// * The memory footprint of this hosted application is ~69 kbytes by default
+// * using the standard reference design.
+// *
+// * For a reduced footprint version of this template, and an explanation of how
+// * to reduce the memory footprint for a given application, see the
+// * "small_hello_world" template.
+// *
+// */
+//
+//#include <stdio.h>
+//
+//int main()
+//{
+//  printf("Hello from Nios II!\n");
+//
+//  return 0;
+//}
+#include <unistd.h>
+#include "system.h"
+//#include <altera_avalon_pio_regs.h>
+#include "alt_types.h"
+#include <stdio.h>
+#include "sys/alt_stdio.h"
+// Provides printf().
+#include <system.h>
+#include <stdbool.h>
+#include <alt_types.h>
+// Provides the standard types, such as alt_u32.
+#include <io.h>
+// Provides the IORD() and IOWR() instrinsics for the ldwio and stwio instructions.
+
+//global
+float pwm_frequency = 10e3f;
+float dim_period = 2.0f;
+
+
+//
+//void reader() {
+//    // Read the counter. Begin with declaring a 64-bit value that can be split between
+//    // high and lo halves.
+//    union {
+//        struct {
+//        alt_u32 lo;
+//        alt_u32 hi;
+//        } parts;
+//        alt_u64 raw;
+//    } cnt;
+//
+//    // Read upper 32 bits
+//    cnt.parts.hi = IORD(PERFORMANCE_COUNTER_0_BASE,1);
+//
+//    // Read lower 32 bits
+//    cnt.parts.lo = IORD(PERFORMANCE_COUNTER_0_BASE,0);
+//    // Refer to both halves as "cnts.raw"
+//}
+
+
+//my thinking
+int main() {
+//	alt_u64 pwm_period_in_cycles = (alt_u64)(pwm_period * (float)ALT_CPU_FREQ);
+//	float current_duty_cycle = fabs((cycle_counter % dim_period_in_cycles)*(-2.f/dim_period_in_cycles) + 1.0f);
+
+	alt_u32 current_value;
+	alt_u32 current_state;
+	alt_u8 current_direction;
+	alt_u32 keys;
+	current_state=3;
+	current_value=1;
+	current_direction=0;
+	printf ("Program running (UART)...\n");
+
+//his code from the slides
+	// read the current state of the keys
+	keys=IORD_ALTERA_AVALON_PIO_DATA(KEYS_BASE);
+	// switch speed if necessary
+	if ((keys != 7) && (keys != current_state)) {
+	if (keys == 3) printf ("speed set to 250 ms\n");
+	else if (keys == 5) printf ("speed set to 150 ms\n");
+	else if (keys == 6) printf ("speed set to 50 ms\n");
+	current_state=keys;
+	}
+	// switch direction if necessary
+	if ((current_direction==0) && (current_value==(1 << 25))) current_direction=1;
+	else if ((current_direction==1) && (current_value==1)) current_direction=0;
+	// move light
+	else if (current_direction==0) current_value = current_value << 1;
+	else current_value = current_value >> 1;
+	// update lights
+	IOWR_ALTERA_AVALON_PIO_DATA(LEDS_BASE,current_value);
+	// wait
+	if (current_state==3) usleep (250000);
+	else if (current_state==5) usleep (125000);
+	else usleep (50000); }
+
+
+
+
+    //turn all lights on
+    //IOWR(LEDS_BASE,0,0x3FFFFFF);
+    //IOWR(LEDS_BASE,0,0x0000000);
+    printf("Hello\n");
+    // Start the counter; do this only once at the beginning of your main() function
+    // Note that this writes the value 0 to register 1 on the performance counter module.
+    // This assumes you used the default name for the performance counter, which is
+    // "performance_counter_0".
+
+//    IOWR(PERFORMANCE_COUNTER_0_BASE,1,0);
+//    bool run = true;
+//    while(run) {
+//        if(pwm_period_in_cycles < (dim_period/2)) {
+//            current_duty_cycle = current_duty_cycle*(-.1);
+//        }
+//        else if (pwm_period_in_cycles >= (dim_period/2)) {
+//            current_duty_cycle = current_duty_cycle*(.1);
+//        }
+//    }
+	return 0;
+}
