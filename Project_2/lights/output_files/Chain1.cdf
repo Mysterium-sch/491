@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CE115F29) Path("/acct/lrlamb/Desktop/491_repo/Project_2/lights/output_files/") File("lights.sof") MfrSpec(OpMask(1));
+		Device PartName(EP4CE115F29) Path("/acct/lrlamb/Desktop/491_repo/Project_2Try_2/lights/output_files/") File("lights.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

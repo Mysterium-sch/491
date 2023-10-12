@@ -1,9 +1,0 @@
-11:31:36 **** Build of configuration Nios II for project lighter ****
-make all 
-Info: Building ../lighter_bsp/
-make --no-print-directory -C ../lighter_bsp/
-[BSP build complete]
-[lighter build complete]
-
-11:31:37 Build Finished (took 717ms)
-

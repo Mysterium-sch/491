@@ -31,18 +31,18 @@ refer to the applicable agreement for further details.
 		(line (pt 0 72)(pt 224 72)(line_width 1))
 	)
 	(port
+		(pt 0 112)
+		(input)
+		(text "keys_export[2..0]" (rect 0 0 70 12)(font "Arial" (font_size 8)))
+		(text "keys_export[2..0]" (rect 4 101 106 112)(font "Arial" (font_size 8)))
+		(line (pt 0 112)(pt 224 112)(line_width 3))
+	)
+	(port
 		(pt 0 360)
 		(input)
 		(text "reset_reset_n" (rect 0 0 56 12)(font "Arial" (font_size 8)))
 		(text "reset_reset_n" (rect 4 349 82 360)(font "Arial" (font_size 8)))
 		(line (pt 0 360)(pt 224 360)(line_width 1))
-	)
-	(port
-		(pt 0 112)
-		(output)
-		(text "keys_export[2..0]" (rect 0 0 70 12)(font "Arial" (font_size 8)))
-		(text "keys_export[2..0]" (rect 4 101 106 112)(font "Arial" (font_size 8)))
-		(line (pt 0 112)(pt 224 112)(line_width 3))
 	)
 	(port
 		(pt 0 152)

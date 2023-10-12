@@ -16,7 +16,7 @@ module nios_system (
 	sdram_clk_clk);	
 
 	input		clk_clk;
-	output	[2:0]	keys_export;
+	input	[2:0]	keys_export;
 	output	[25:0]	leds_export;
 	output	[12:0]	new_sdram_controller_0_wire_addr;
 	output	[1:0]	new_sdram_controller_0_wire_ba;

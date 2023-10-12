@@ -1,7 +1,7 @@
 	component nios_system is
 		port (
 			clk_clk                           : in    std_logic                     := 'X';             -- clk
-			keys_export                       : out   std_logic_vector(2 downto 0);                     -- export
+			keys_export                       : in    std_logic_vector(2 downto 0)  := (others => 'X'); -- export
 			leds_export                       : out   std_logic_vector(25 downto 0);                    -- export
 			new_sdram_controller_0_wire_addr  : out   std_logic_vector(12 downto 0);                    -- addr
 			new_sdram_controller_0_wire_ba    : out   std_logic_vector(1 downto 0);                     -- ba
