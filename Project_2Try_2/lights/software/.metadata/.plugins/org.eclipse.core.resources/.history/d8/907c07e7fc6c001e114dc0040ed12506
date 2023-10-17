@@ -31,15 +31,17 @@ float dim_period = 5.0f;
 
 int main()
 {
-	// global variables
 	alt_u32 current_value;
 	alt_u32 per_base;
 	per_base = 0x10001000;
+	alt_u32 value;
+	alt_u8 fade;
+	fade = 1;
+	value = 0;
 	alt_u64 cycles;
 	current_value=100;
+	alt_u64 cycle_counter = 1;
 	float current_duty_cycle;
-
-	// reset lights
 	IOWR(LED_PWM_0_BASE,0,0x3FFFFFF);
 	usleep (250000);
 	printf ("Program running (UART)...\n");
