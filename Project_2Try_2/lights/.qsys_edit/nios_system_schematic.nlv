@@ -1,30 +1,33 @@
 # # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
 # 
-preplace inst nios_system.nios2_gen2_0 -pg 1 -lvl 3 -y 70
-preplace inst nios_system.clk_1 -pg 1 -lvl 3 -y 300
-preplace inst nios_system.jtag_uart_0 -pg 1 -lvl 4 -y 350
+preplace inst nios_system.performance_counter_0 -pg 1 -lvl 4 -y 590
+preplace inst nios_system.nios2_gen2_0 -pg 1 -lvl 3 -y 100
+preplace inst nios_system.clk_1 -pg 1 -lvl 3 -y 350
+preplace inst nios_system.jtag_uart_0 -pg 1 -lvl 4 -y 390
 preplace inst nios_system.nios2_gen2_0.clock_bridge -pg 1
 preplace inst nios_system -pg 1 -lvl 1 -y 40 -regy -20
-preplace inst nios_system.leds -pg 1 -lvl 4 -y 230
 preplace inst nios_system.sys_sdram_pll_0.sys_pll -pg 1
-preplace inst nios_system.new_sdram_controller_0 -pg 1 -lvl 4 -y 500
-preplace inst nios_system.sys_sdram_pll_0 -pg 1 -lvl 2 -y 330
-preplace inst nios_system.keys -pg 1 -lvl 4 -y 130
+preplace inst nios_system.new_sdram_controller_0 -pg 1 -lvl 4 -y 670
+preplace inst nios_system.sys_sdram_pll_0 -pg 1 -lvl 2 -y 380
+preplace inst nios_system.led_pwm_0 -pg 1 -lvl 4 -y 490
+preplace inst nios_system.keys -pg 1 -lvl 4 -y 80
 preplace inst nios_system.nios2_gen2_0.cpu -pg 1
 preplace inst nios_system.sys_sdram_pll_0.reset_from_locked -pg 1
 preplace inst nios_system.nios2_gen2_0.reset_bridge -pg 1
-preplace inst nios_system.clk_0 -pg 1 -lvl 1 -y 330
-preplace netloc EXPORT<net_container>nios_system</net_container>(MASTER)clk_1.clk,(MASTER)nios_system.sdram_clk) 1 3 2 NJ 340 NJ
-preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)nios_system.reset) 1 0 1 NJ
-preplace netloc INTERCONNECT<net_container>nios_system</net_container>(SLAVE)jtag_uart_0.avalon_jtag_slave,(SLAVE)leds.s1,(SLAVE)nios2_gen2_0.debug_mem_slave,(SLAVE)keys.s1,(SLAVE)new_sdram_controller_0.s1,(MASTER)nios2_gen2_0.data_master,(MASTER)nios2_gen2_0.instruction_master) 1 2 2 690 230 1130
-preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)new_sdram_controller_0.wire,(SLAVE)nios_system.new_sdram_controller_0_wire) 1 0 4 NJ 570 NJ 570 NJ 570 NJ
-preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)nios_system.leds,(SLAVE)leds.external_connection) 1 0 4 NJ 260 NJ 260 NJ 260 NJ
-preplace netloc POINT_TO_POINT<net_container>nios_system</net_container>(MASTER)clk_0.clk,(SLAVE)sys_sdram_pll_0.ref_clk) 1 1 1 N
-preplace netloc FAN_OUT<net_container>nios_system</net_container>(SLAVE)sys_sdram_pll_0.ref_reset,(SLAVE)leds.reset,(SLAVE)keys.reset,(SLAVE)clk_1.clk_in_reset,(SLAVE)jtag_uart_0.reset,(SLAVE)nios2_gen2_0.reset,(SLAVE)new_sdram_controller_0.reset,(MASTER)clk_0.clk_reset) 1 1 3 390 290 670 370 1050
-preplace netloc FAN_OUT<net_container>nios_system</net_container>(SLAVE)nios2_gen2_0.clk,(MASTER)sys_sdram_pll_0.sys_clk,(SLAVE)leds.clk,(SLAVE)keys.clk) 1 2 2 630 30 1150
-preplace netloc FAN_OUT<net_container>nios_system</net_container>(MASTER)sys_sdram_pll_0.sdram_clk,(SLAVE)jtag_uart_0.clk,(SLAVE)clk_1.clk_in,(SLAVE)new_sdram_controller_0.clk) 1 2 2 650 390 1070
-preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)nios_system.keys,(SLAVE)keys.external_connection) 1 0 4 NJ 210 NJ 210 NJ 210 NJ
-preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)clk_0.clk_in,(SLAVE)nios_system.clk) 1 0 1 NJ
-preplace netloc POINT_TO_POINT<net_container>nios_system</net_container>(MASTER)nios2_gen2_0.irq,(SLAVE)jtag_uart_0.irq) 1 3 1 1090
-levelinfo -pg 1 0 180 1460
-levelinfo -hier nios_system 190 220 470 810 1220 1370
+preplace inst nios_system.key -pg 1 -lvl 4 -y 270
+preplace inst nios_system.clk_0 -pg 1 -lvl 1 -y 380
+preplace netloc EXPORT<net_container>nios_system</net_container>(MASTER)clk_1.clk,(MASTER)nios_system.sdram_clk) 1 3 2 NJ 380 NJ
+preplace netloc FAN_OUT<net_container>nios_system</net_container>(MASTER)clk_0.clk,(SLAVE)sys_sdram_pll_0.ref_clk,(SLAVE)key.clk,(SLAVE)led_pwm_0.clk,(SLAVE)performance_counter_0.clk) 1 1 3 390 320 NJ 320 1110
+preplace netloc INTERCONNECT<net_container>nios_system</net_container>(SLAVE)led_pwm_0.avalon_slave,(SLAVE)performance_counter_0.control_slave,(SLAVE)jtag_uart_0.avalon_jtag_slave,(MASTER)nios2_gen2_0.instruction_master,(SLAVE)key.s1,(MASTER)nios2_gen2_0.data_master,(SLAVE)nios2_gen2_0.debug_mem_slave,(SLAVE)new_sdram_controller_0.s1,(SLAVE)keys.s1) 1 2 2 690 240 1090
+preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)nios_system.clk,(SLAVE)clk_0.clk_in) 1 0 1 NJ
+preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)new_sdram_controller_0.wire,(SLAVE)nios_system.new_sdram_controller_0_wire) 1 0 4 NJ 740 NJ 740 NJ 740 NJ
+preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)nios_system.led_pwm_0_leds,(SLAVE)led_pwm_0.leds) 1 0 4 NJ 540 NJ 540 NJ 540 NJ
+preplace netloc FAN_OUT<net_container>nios_system</net_container>(SLAVE)jtag_uart_0.reset,(SLAVE)keys.reset,(SLAVE)clk_1.clk_in_reset,(SLAVE)sys_sdram_pll_0.ref_reset,(SLAVE)performance_counter_0.reset,(MASTER)clk_0.clk_reset,(SLAVE)led_pwm_0.rst,(SLAVE)new_sdram_controller_0.reset,(SLAVE)nios2_gen2_0.reset,(SLAVE)key.reset) 1 1 3 410 340 670 340 1190
+preplace netloc FAN_OUT<net_container>nios_system</net_container>(SLAVE)jtag_uart_0.clk,(SLAVE)clk_1.clk_in,(MASTER)sys_sdram_pll_0.sdram_clk,(SLAVE)new_sdram_controller_0.clk) 1 2 2 690 420 1170
+preplace netloc FAN_OUT<net_container>nios_system</net_container>(SLAVE)nios2_gen2_0.clk,(MASTER)sys_sdram_pll_0.sys_clk,(SLAVE)keys.clk) 1 2 2 650 60 1090
+preplace netloc POINT_TO_POINT<net_container>nios_system</net_container>(SLAVE)jtag_uart_0.irq,(MASTER)nios2_gen2_0.irq) 1 3 1 1150
+preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)nios_system.reset,(SLAVE)clk_0.clk_in_reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)nios_system.keys,(SLAVE)keys.external_connection) 1 0 4 NJ 40 NJ 40 NJ 40 NJ
+preplace netloc EXPORT<net_container>nios_system</net_container>(SLAVE)key.external_connection,(SLAVE)nios_system.key) 1 0 4 NJ 300 NJ 300 NJ 300 NJ
+levelinfo -pg 1 0 180 1500
+levelinfo -hier nios_system 190 220 490 850 1260 1410

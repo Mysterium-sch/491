@@ -3,7 +3,7 @@
 <name>nios_system</name>
 <peripherals>
 <peripheral>
-      <name>nios_system_leds_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>nios_system_keys_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -121,7 +121,7 @@
     </registers>
    </peripheral>
   <peripheral>
-      <name>nios_system_keys_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>nios_system_key_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>

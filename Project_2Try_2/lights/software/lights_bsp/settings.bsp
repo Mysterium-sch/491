@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Oct 3, 2023 11:33:31 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1696347211162</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Oct 17, 2023 10:24:03 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1697552643179</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/acct/lrlamb/Desktop/491_repo/Project_2Try_2/lights/software/lights_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../nios_system.sopcinfo</SopcDesignFile>
@@ -911,20 +911,26 @@
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>keys</slaveDescriptor>
+                <slaveDescriptor>key</slaveDescriptor>
                 <addressRange>0x10001040 - 0x1000104F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>leds</slaveDescriptor>
+                <slaveDescriptor>keys</slaveDescriptor>
                 <addressRange>0x10001050 - 0x1000105F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>jtag_uart_0</slaveDescriptor>
+                <slaveDescriptor>led_pwm_0</slaveDescriptor>
                 <addressRange>0x10001060 - 0x10001067</addressRange>
+                <addressSpan>8</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>jtag_uart_0</slaveDescriptor>
+                <addressRange>0x10001068 - 0x1000106F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>

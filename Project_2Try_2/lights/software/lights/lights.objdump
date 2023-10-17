@@ -71,7 +71,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  26 .jdi          00005177  00000000  00000000  00048a46  2**0
                   CONTENTS, READONLY
- 27 .sopcinfo     00040ea1  00000000  00000000  0004dbbd  2**0
+ 27 .sopcinfo     000452e2  00000000  00000000  0004dbbd  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 08000000 l    d  .entry	00000000 .entry
@@ -955,11 +955,11 @@ int main()
  8000344:	e0bff615 	stw	r2,-40(fp)
  8000348:	e03ff715 	stw	zero,-36(fp)
 	float current_duty_cycle;
-	IOWR(LEDS_BASE,0,0x3FFFFFF);
+	IOWR(LED_PWM_0_BASE,0,0x3FFFFFF);
  800034c:	00c10034 	movhi	r3,1024
  8000350:	18ffffc4 	addi	r3,r3,-1
  8000354:	00840034 	movhi	r2,4096
- 8000358:	10841404 	addi	r2,r2,4176
+ 8000358:	10841804 	addi	r2,r2,4192
  800035c:	10c00035 	stwio	r3,0(r2)
 	usleep (250000);
  8000360:	01000134 	movhi	r4,4
@@ -1073,21 +1073,21 @@ int main()
 			current_value = 1;
  80004d4:	00800044 	movi	r2,1
  80004d8:	e0bfed15 	stw	r2,-76(fp)
-			IOWR(LEDS_BASE,0,0x3FFFFFF);
+			IOWR(LED_PWM_0_BASE,0,0x3FFFFFF);
  80004dc:	00c10034 	movhi	r3,1024
  80004e0:	18ffffc4 	addi	r3,r3,-1
  80004e4:	00840034 	movhi	r2,4096
- 80004e8:	10841404 	addi	r2,r2,4176
+ 80004e8:	10841804 	addi	r2,r2,4192
  80004ec:	10c00035 	stwio	r3,0(r2)
  80004f0:	00000506 	br	8000508 <main+0x278>
 		}
 		else {
 			current_value = 0;
  80004f4:	e03fed15 	stw	zero,-76(fp)
-			IOWR(LEDS_BASE,0,0x0000000);
+			IOWR(LED_PWM_0_BASE,0,0x0000000);
  80004f8:	0007883a 	mov	r3,zero
  80004fc:	00840034 	movhi	r2,4096
- 8000500:	10841404 	addi	r2,r2,4176
+ 8000500:	10841804 	addi	r2,r2,4192
  8000504:	10c00035 	stwio	r3,0(r2)
 		}
 		IOWR(per_base,1,current_value);

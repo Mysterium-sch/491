@@ -1,7 +1,8 @@
 	nios_system u0 (
 		.clk_clk                           (<connected-to-clk_clk>),                           //                         clk.clk
+		.key_export                        (<connected-to-key_export>),                        //                         key.export
 		.keys_export                       (<connected-to-keys_export>),                       //                        keys.export
-		.leds_export                       (<connected-to-leds_export>),                       //                        leds.export
+		.leds_new_signal                   (<connected-to-leds_new_signal>),                   //                        leds.new_signal
 		.new_sdram_controller_0_wire_addr  (<connected-to-new_sdram_controller_0_wire_addr>),  // new_sdram_controller_0_wire.addr
 		.new_sdram_controller_0_wire_ba    (<connected-to-new_sdram_controller_0_wire_ba>),    //                            .ba
 		.new_sdram_controller_0_wire_cas_n (<connected-to-new_sdram_controller_0_wire_cas_n>), //                            .cas_n
