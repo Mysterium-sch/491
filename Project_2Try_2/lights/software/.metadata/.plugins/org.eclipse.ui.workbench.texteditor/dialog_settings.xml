@@ -2,15 +2,22 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="LED" key="selection"/>
+		<item value="led" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="led"/>
+			<item value="fade"/>
+			<item value="per_base"/>
+			<item value="per"/>
+			<item value="key"/>
+			<item value="LEDS_BASE"/>
 			<item value="LED"/>
 		</list>
 		<list key="replacehistory">
+			<item value="LED_PWM_0_BASE"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
