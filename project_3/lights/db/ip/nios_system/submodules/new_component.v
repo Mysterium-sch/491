@@ -58,7 +58,7 @@ module new_component (
 
 
             for (i = 0; i < 26; i = i + 1) begin
-                if (cnt[(i*26) +: 25] > pwm[(i*26) +: 25]) begin
+                if (cnt[((i*26)+14) +: 11] > pwm[(i*26) +: 11]) begin
                     led_hold[i] <= 1'b1;
                 end
                 else begin
