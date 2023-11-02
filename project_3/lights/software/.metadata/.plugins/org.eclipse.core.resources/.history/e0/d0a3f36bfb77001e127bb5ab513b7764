@@ -1,0 +1,105 @@
+/*
+ * "Hello World" example.
+ *
+ * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
+ * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
+ * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
+ * device in your system's hardware.
+ * The memory footprint of this hosted application is ~69 kbytes by default
+ * using the standard reference design.
+ *
+ * For a reduced footprint version of this template, and an explanation of how
+ * to reduce the memory footprint for a given application, see the
+ * "small_hello_world" template.
+ *
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "system.h"
+#include "altera_avalon_pio_regs.h"
+#include "alt_types.h"
+#include "sys/alt_stdio.h"
+#include <system.h>
+#include <stdbool.h>
+#include <alt_types.h>
+#include <io.h>
+#include <math.h>
+#include <time.h>
+
+float pwm_frequency = 10e3f;
+float dim_period = 5.0f;
+
+int main()
+{
+	time_t t;
+	srand((unsigned) time(&t));
+
+	// global variables
+	alt_u32 current_value;
+	alt_u32 per_base;
+	per_base = 0x10001000;
+	alt_u64 cycles;
+	current_value=1;
+	float current_duty_cycle;
+
+	// reset lights
+	IOWR(LED_PWM_0_BASE,0,0x00000000);
+	usleep (250000);
+	printf ("Program running (UART)...\n");
+	IOWR(per_base,1,0);
+
+	while (1) {
+
+		union {
+		struct {
+		alt_u32 lo;
+		alt_u32 hi;
+		} parts;
+		alt_u64 raw;
+		} cnt;
+		cnt.parts.hi = IORD(per_base,1);
+		cnt.parts.lo = IORD(per_base,0);
+
+		alt_u64 count = cnt.raw;
+
+		// Change speed
+		alt_u32 speed = IORD(KEY_BASE,0);
+
+		if(speed == 2) {
+			pwm_frequency = 90e3f;
+			printf("Changing frequency to 90ms\n");
+		} else if (speed == 8) {
+			pwm_frequency = 50e3f;
+			printf("Changing frequency to 50ms\n");
+		}else if (speed == 7) {
+			pwm_frequency = 70e3f;
+			printf("Changing frequency to 70ms\n");
+		}
+
+		float pwm_period = 1.0f/pwm_frequency;
+		alt_u64 dim_period_in_cycles = (alt_u64)(dim_period * (float)ALT_CPU_FREQ);
+		alt_u64 pwm_period_in_cycles = (alt_u64)(pwm_period * (float)ALT_CPU_FREQ);
+
+		// calculate dim/bright leds
+		current_duty_cycle = fabs((count % dim_period_in_cycles)*(-2.f/dim_period_in_cycles) + 1.0f);
+		cycles = (float)ALT_CPU_FREQ*current_duty_cycle*pwm_period;
+		if((count % (alt_u64)pwm_period_in_cycles) < (cycles)) {
+			current_value = 1;
+			// choose one random LED
+			int led = rand()%26;
+
+			// LED hex
+			alt_u32 led_hex = 0x00000000;
+			led_hex = 1<<led;
+			IOWR(LED_PWM_0_BASE,0,led_hex);
+		}
+		else {
+			current_value = 0;
+			IOWR(LED_PWM_0_BASE,0,0x0000000);
+		}
+		IOWR(per_base,1,current_value);
+	}
+	return 0;
+}

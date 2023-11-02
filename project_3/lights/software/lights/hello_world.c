@@ -37,68 +37,69 @@ int main()
 	srand((unsigned) time(&t));
 
 	// global variables
-	alt_u32 current_value;
-	alt_u32 per_base;
-	per_base = 0x10001000;
-	alt_u64 cycles;
-	current_value=100;
-	float current_duty_cycle;
+	pwm_frequency = 10e3f;
+//	alt_u32 current_value;
+//	alt_u32 per_base;
+//	per_base = 0x10001000;
+//	alt_u64 cycles;
+//	current_value=1;
+//	float current_duty_cycle;
 
 	// reset lights
-	IOWR(LED_PWM_0_BASE,0,0x00000000);
+	IOWR(LED_PWM_0_BASE,0,0x3FFFFFF);
 	usleep (250000);
 	printf ("Program running (UART)...\n");
-	IOWR(per_base,1,0);
+	//IOWR(per_base,1,0);
 
 	while (1) {
 
-		union {
-		struct {
-		alt_u32 lo;
-		alt_u32 hi;
-		} parts;
-		alt_u64 raw;
-		} cnt;
-		cnt.parts.hi = IORD(per_base,1);
-		cnt.parts.lo = IORD(per_base,0);
-
-		alt_u64 count = cnt.raw;
+//		union {
+//		struct {
+//		alt_u32 lo;
+//		alt_u32 hi;
+//		} parts;
+//		alt_u64 raw;
+//		} cnt;
+//		cnt.parts.hi = IORD(per_base,1);
+//		cnt.parts.lo = IORD(per_base,0);
+//
+//		alt_u64 count = cnt.raw;
 
 		// Change speed
-		alt_u8 speed = IORD(KEY_BASE,0);
+		alt_u32 speed = IORD(KEY_BASE,0);
 
-		if(speed == 0) {
-			pwm_frequency = 1e3f;
-		} else if (speed == 1) {
-			pwm_frequency = 5e3f;
-		}else if (speed == 2) {
-			pwm_frequency = 10e3f;
-		} else {
-			pwm_frequency = 20e3f;
+		if(speed == 13) {
+			pwm_frequency = 50e3f;
+		} else if (speed == 11) {
+			pwm_frequency = 70e3f;
+		}else if (speed == 7) {
+			pwm_frequency = 90e3f;
 		}
 
-		float pwm_period = 1.0f/pwm_frequency;
-		alt_u64 dim_period_in_cycles = (alt_u64)(dim_period * (float)ALT_CPU_FREQ);
-		alt_u64 pwm_period_in_cycles = (alt_u64)(pwm_period * (float)ALT_CPU_FREQ);
-
-		// calculate dim/bright leds
-		current_duty_cycle = fabs((count % dim_period_in_cycles)*(-2.f/dim_period_in_cycles) + 1.0f);
-		cycles = (float)ALT_CPU_FREQ*current_duty_cycle*pwm_period;
-		if((count % (alt_u64)pwm_period_in_cycles) < (cycles)) {
-			current_value = 1;
+//		float pwm_period = 1.0f/pwm_frequency;
+//		alt_u64 dim_period_in_cycles = (alt_u64)(dim_period * (float)ALT_CPU_FREQ);
+//		alt_u64 pwm_period_in_cycles = (alt_u64)(pwm_period * (float)ALT_CPU_FREQ);
+//
+//		// calculate dim/bright leds
+//		current_duty_cycle = fabs((count % dim_period_in_cycles)*(-2.f/dim_period_in_cycles) + 1.0f);
+//		cycles = (float)ALT_CPU_FREQ*current_duty_cycle*pwm_period;
+//		if((count % (alt_u64)pwm_period_in_cycles) < (cycles)) {
+//			current_value = 1;
 			// choose one random LED
+
 			int led = rand()%26;
 
 			// LED hex
-			alt_u32 led_hex = 0x00000000;
+			alt_u32 led_hex = 0X0000000;
 			led_hex = 1<<led;
 			IOWR(LED_PWM_0_BASE,0,led_hex);
-		}
-		else {
-			current_value = 0;
-			IOWR(LED_PWM_0_BASE,0,0x0000000);
-		}
-		IOWR(per_base,1,current_value);
+			sleep(pwm_frequency);
+//		}
+//		else {
+//			current_value = 0;
+//			IOWR(LED_PWM_0_BASE,0,0x0000000);
+//		}
+//		IOWR(per_base,1,current_value);
 	}
 	return 0;
 }

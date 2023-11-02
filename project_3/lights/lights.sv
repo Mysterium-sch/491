@@ -9,9 +9,9 @@ module lights (input CLOCK_50,
 	output [3:0] DRAM_DQM,
 	output DRAM_RAS_N,
 	output DRAM_WE_N,
-	output DRAM_CLK
-	//output [17:0] LEDR,
-	//output [7:0] LEDG
+	output DRAM_CLK,
+	output [17:0] LEDR,
+	output [7:0] LEDG
 	);
 
 	nios_system u0 (		
@@ -29,7 +29,7 @@ module lights (input CLOCK_50,
 		.sdram_clk_clk                     (DRAM_CLK),
 		//.keys_export (KEY[3:1]), // keys.export
 		.key_export (KEY),	// key.export
-		//.leds_export ({LEDR,LEDG}), // leds.export
+		.leds_new_signal ({LEDR,LEDG}), // leds.export
 	);
 					
 endmodule
