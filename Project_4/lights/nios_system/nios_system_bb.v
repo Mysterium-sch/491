@@ -1,6 +1,7 @@
 
 module nios_system (
 	clk_clk,
+	encoder_in_new_signal,
 	key_export,
 	leds_new_signal,
 	new_sdram_controller_0_wire_addr,
@@ -15,9 +16,10 @@ module nios_system (
 	pwm_out_new_signal,
 	reset_reset_n,
 	sdram_clk_clk,
-	encoder_in_new_signal);	
+	motor_rpm_out_new_signal);	
 
 	input		clk_clk;
+	input	[1:0]	encoder_in_new_signal;
 	output	[7:0]	key_export;
 	output	[25:0]	leds_new_signal;
 	output	[11:0]	new_sdram_controller_0_wire_addr;
@@ -32,5 +34,5 @@ module nios_system (
 	output	[1:0]	pwm_out_new_signal;
 	input		reset_reset_n;
 	output		sdram_clk_clk;
-	input	[1:0]	encoder_in_new_signal;
+	output	[10:0]	motor_rpm_out_new_signal;
 endmodule

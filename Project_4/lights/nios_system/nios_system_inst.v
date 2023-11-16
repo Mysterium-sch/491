@@ -1,5 +1,6 @@
 	nios_system u0 (
 		.clk_clk                           (<connected-to-clk_clk>),                           //                         clk.clk
+		.encoder_in_new_signal             (<connected-to-encoder_in_new_signal>),             //                  encoder_in.new_signal
 		.key_export                        (<connected-to-key_export>),                        //                         key.export
 		.leds_new_signal                   (<connected-to-leds_new_signal>),                   //                        leds.new_signal
 		.new_sdram_controller_0_wire_addr  (<connected-to-new_sdram_controller_0_wire_addr>),  // new_sdram_controller_0_wire.addr
@@ -14,6 +15,6 @@
 		.pwm_out_new_signal                (<connected-to-pwm_out_new_signal>),                //                     pwm_out.new_signal
 		.reset_reset_n                     (<connected-to-reset_reset_n>),                     //                       reset.reset_n
 		.sdram_clk_clk                     (<connected-to-sdram_clk_clk>),                     //                   sdram_clk.clk
-		.encoder_in_new_signal             (<connected-to-encoder_in_new_signal>)              //                  encoder_in.new_signal
+		.motor_rpm_out_new_signal          (<connected-to-motor_rpm_out_new_signal>)           //               motor_rpm_out.new_signal
 	);
 

@@ -1,6 +1,7 @@
 	component nios_system is
 		port (
 			clk_clk                           : in    std_logic                     := 'X';             -- clk
+			encoder_in_new_signal             : in    std_logic_vector(1 downto 0)  := (others => 'X'); -- new_signal
 			key_export                        : out   std_logic_vector(7 downto 0);                     -- export
 			leds_new_signal                   : out   std_logic_vector(25 downto 0);                    -- new_signal
 			new_sdram_controller_0_wire_addr  : out   std_logic_vector(11 downto 0);                    -- addr
@@ -15,13 +16,14 @@
 			pwm_out_new_signal                : out   std_logic_vector(1 downto 0);                     -- new_signal
 			reset_reset_n                     : in    std_logic                     := 'X';             -- reset_n
 			sdram_clk_clk                     : out   std_logic;                                        -- clk
-			encoder_in_new_signal             : in    std_logic_vector(1 downto 0)  := (others => 'X')  -- new_signal
+			motor_rpm_out_new_signal          : out   std_logic_vector(10 downto 0)                     -- new_signal
 		);
 	end component nios_system;
 
 	u0 : component nios_system
 		port map (
 			clk_clk                           => CONNECTED_TO_clk_clk,                           --                         clk.clk
+			encoder_in_new_signal             => CONNECTED_TO_encoder_in_new_signal,             --                  encoder_in.new_signal
 			key_export                        => CONNECTED_TO_key_export,                        --                         key.export
 			leds_new_signal                   => CONNECTED_TO_leds_new_signal,                   --                        leds.new_signal
 			new_sdram_controller_0_wire_addr  => CONNECTED_TO_new_sdram_controller_0_wire_addr,  -- new_sdram_controller_0_wire.addr
@@ -36,6 +38,6 @@
 			pwm_out_new_signal                => CONNECTED_TO_pwm_out_new_signal,                --                     pwm_out.new_signal
 			reset_reset_n                     => CONNECTED_TO_reset_reset_n,                     --                       reset.reset_n
 			sdram_clk_clk                     => CONNECTED_TO_sdram_clk_clk,                     --                   sdram_clk.clk
-			encoder_in_new_signal             => CONNECTED_TO_encoder_in_new_signal              --                  encoder_in.new_signal
+			motor_rpm_out_new_signal          => CONNECTED_TO_motor_rpm_out_new_signal           --               motor_rpm_out.new_signal
 		);
 

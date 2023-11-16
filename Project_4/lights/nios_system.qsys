@@ -121,6 +121,30 @@
          type = "String";
       }
    }
+   element nios_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
+   element nios_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
+   element nios_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV E";
+         type = "String";
+      }
+   }
    element performance_counter_0
    {
       datum _sortIndex
@@ -178,6 +202,11 @@
    type="conduit"
    dir="end" />
  <interface name="leds" internal="led_pwm_0.conduit_end" type="conduit" dir="end" />
+ <interface
+   name="motor_rpm_out"
+   internal="motor_0.rpm_out"
+   type="conduit"
+   dir="end" />
  <interface
    name="new_sdram_controller_0_wire"
    internal="new_sdram_controller_0.wire"
@@ -286,7 +315,7 @@
   <parameter name="dataAddrWidth" value="26" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='motor_0.avalon_slave' start='0x0' end='0x8' type='motor.avalon_slave' /><slave name='new_sdram_controller_0.s1' start='0x1000000' end='0x2000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x2000800' end='0x2001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='performance_counter_0.control_slave' start='0x2001000' end='0x2001040' type='altera_avalon_performance_counter.control_slave' /><slave name='key.s1' start='0x2001040' end='0x2001050' type='altera_avalon_pio.s1' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x2001050' end='0x2001058' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='led_pwm_0.avalon_slave' start='0x2001058' end='0x2001060' type='led_pwm.avalon_slave' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='motor_0.avalon_slave' start='0x0' end='0x2' type='motor.avalon_slave' /><slave name='new_sdram_controller_0.s1' start='0x1000000' end='0x2000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x2000800' end='0x2001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='performance_counter_0.control_slave' start='0x2001000' end='0x2001040' type='altera_avalon_performance_counter.control_slave' /><slave name='key.s1' start='0x2001040' end='0x2001050' type='altera_avalon_pio.s1' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x2001050' end='0x2001058' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='led_pwm_0.avalon_slave' start='0x2001058' end='0x2001060' type='led_pwm.avalon_slave' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />

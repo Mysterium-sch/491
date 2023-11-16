@@ -15,7 +15,8 @@
 			new_sdram_controller_0_wire_we_n  : out   std_logic;                                        -- we_n
 			pwm_out_new_signal                : out   std_logic_vector(1 downto 0);                     -- new_signal
 			reset_reset_n                     : in    std_logic                     := 'X';             -- reset_n
-			sdram_clk_clk                     : out   std_logic                                         -- clk
+			sdram_clk_clk                     : out   std_logic;                                        -- clk
+			motor_rpm_out_new_signal          : out   std_logic_vector(10 downto 0)                     -- new_signal
 		);
 	end component nios_system;
 
