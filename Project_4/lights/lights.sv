@@ -12,7 +12,7 @@ module lights (input CLOCK_50,
 	output DRAM_CLK,
 	output [17:0] LEDR,
 	output [7:0] LEDG,
-	inout [35:0] GPIO,
+	inout [35:0] GPIO
 	);
 
 	nios_system u0 (		
@@ -29,10 +29,9 @@ module lights (input CLOCK_50,
 		.new_sdram_controller_0_wire_we_n  (DRAM_WE_N),  //                            .we_n
 		.sdram_clk_clk                     (DRAM_CLK),
 		//.keys_export (KEY[3:1]), // keys.export
-		.key_export (KEY),										// 								key.export
-		.leds_new_signal ({LEDR,LEDG}),						 // 								leds.export
-		.pwm_out.new_signal						(GPIO[1:0]),
-		.encoder_in.new_signal					(GPIO[3:2]),
+		.key_export 								(KEY[3:1]),									
+		.pwm_out_new_signal										(GPIO[1:0]),
+		.encoder_in_new_signal									(GPIO[3:2])
 	);
 					
 endmodule
