@@ -2,10 +2,10 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Nov 28, 2023 10:03:15 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1701183795491</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Nov 30, 2023 11:09:26 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1701360566140</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>/acct/lrlamb/Desktop/491_repo/Project_4/lights/software/lights_bsp</BspGeneratedLocation>
-        <BspSettingsFile>./settings.bsp</BspSettingsFile>
+        <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>../../nios_system.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
         <Cpu>nios2_gen2_0</Cpu>

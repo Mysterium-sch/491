@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# This script creates the hello_world application in this directory.
+# This script creates the lights application in this directory.
 
 
 BSP_DIR=../lights_bsp

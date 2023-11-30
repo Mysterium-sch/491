@@ -10,7 +10,6 @@
 #include <alt_types.h>
 #include <io.h>
 #include <math.h>
-#include <time.h>
 
 float pwm_frequency = 10e3f;
 float dim_period = 5.0f;
@@ -19,30 +18,38 @@ int main()
 {
 	time_t t;
 	srand((unsigned) time(&t));
+	alt_u32 motor_base;
+	motor_base = 0x0;
     float T_s = 0.1;
     float k_p = 1.0;
     float k_d = 0.1;
     float k_i = 0.01;
     float setpoint = 1000.0;  //speed in RPM
+    int cycle = 0;
+    //int cur_time = 0;
 
 	// global variables
 	pwm_frequency = 10e3f;
 	usleep (250000);
-	printf ("Program running (UART)...\n");
+	printf ("Program running New...\n");
 
 	unsigned int prev_control_action_cycles = 0;
-    float error = 0.0, error_old = 0.0, error_accum = 0.0, error_delta = 0.0;
+    float error = 0.0;
+    float error_old = 0.0;
+    float error_accum = 0.0;
+    float error_delta = 0.0;
 
     while (1) {
+    	//cur_time = cur_time+1;
         // Determine if we should perform control
-        int cycle_counter = READ_CYCLE_COUNTER;
+        int cycle_counter = cycle;
         int cycles_since_last_control = cycle_counter - prev_control_action_cycles;
         float time_since_last_control = cycles_since_last_control / (float)pwm_frequency;
-        float time_since_start = cycle_counter / (float)pwm_frequency;
+        float cur_time= cycle_counter / (float)pwm_frequency;
 
         // Perform control
         if (time_since_last_control >= T_s) {
-            float current_motor_rpm = IORD(MOTOR_0_BASE,0);
+            float current_motor_rpm = IORD(motor_base,0);
 
             error_old = error;
             error = current_motor_rpm - setpoint;
@@ -50,12 +57,14 @@ int main()
             error_delta = error - error_old;
 
             float motor_input = k_p * error + k_d * error_delta + k_i * error_accum;
-            IOWR(MOTOR_0_BASE,0,motor_input);
+            IOWR(motor_base,0,motor_input);
             prev_control_action_cycles = cycle_counter;
         }
+        cycle = cycle +1;
+        if (cur_time > (int)time) {
+        	break;
+        }
 	}
-	if (time_since_start > time) {
-		break;
-	}
+
 	return 0;
 }
