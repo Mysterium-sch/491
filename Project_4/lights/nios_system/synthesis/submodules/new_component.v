@@ -22,36 +22,39 @@ module new_component (
 	);
 
 	// TODO: Auto-generated HDL template
-reg [10:0] pwm_count;
+	reg [10:0] pwm_count;
     reg signed [10:0] abs_speed;
     reg [1:0] prev_encoder;
     reg [10:0] prev_edge_count;
 	 reg [0:0] dir;
+	 reg [15:0] rpm_hold;
+	 reg [15:0] set_speed;
 
     always @(posedge clk or posedge rst_reset) begin
         if (rst_reset) begin
             pwm_count = 11'b0;
             abs_speed = 11'b0;
-				rpm_out  = 16'b0;
+				rpm_hold = 16'b0;
             prev_encoder = 2'b0;
             prev_edge_count = 11'd0;
             dir = 1'b0;
         end else begin
 		  
-            dir = speed[7];
+				if (avalon_slave_write) begin
+					set_speed <= speed;
+				end
+            dir = set_speed[12];
 
-            abs_speed = speed[7] ? (~speed[7:0] + 8'b1) : speed[7:0];
+            abs_speed = set_speed[12] ? (~set_speed[12:0] + 13'b1) : set_speed[12:0];
 
-            if (abs_speed > 11'h7FF) begin
-                abs_speed = 11'h7FF;
+            if (abs_speed > 13'hFFF) begin
+                abs_speed = 13'hFFF;
             end
 
             pwm_count = pwm_count + 1;
-            pwm_out[0] = (dir) ? pwm_count[10] : ~pwm_count[10];
-            pwm_out[1] = (dir) ? ~pwm_count[10] : pwm_count[10];
 
             if (encoder_in[0] & ~prev_encoder[0]) begin
-                rpm_out  = ((50000000 / (encoder_in[1] ? -1 : 1)) / prev_edge_count);
+                rpm_hold  = ((50000000 / (encoder_in[1] ? -1 : 1)) / prev_edge_count);
                 prev_edge_count = 11'd0;
             end else begin
                 prev_edge_count = prev_edge_count + 1;
@@ -59,5 +62,9 @@ reg [10:0] pwm_count;
             prev_encoder = encoder_in;
         end
     end
+	 
+	 assign  pwm_out[0] = (dir) ? (pwm_count < abs_speed): 1'b0;
+    assign  pwm_out[1] = (~dir) ? (pwm_count < abs_speed) : 1'b0;
+	 assign rpm_out = rpm_hold;
 
 endmodule

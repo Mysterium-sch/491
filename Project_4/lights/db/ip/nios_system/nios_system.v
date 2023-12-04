@@ -43,11 +43,11 @@ module nios_system (
 	wire         mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_read;                // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_read -> jtag_uart_0:av_read_n
 	wire         mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_write;               // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_write -> jtag_uart_0:av_write_n
 	wire  [31:0] mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata;           // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_writedata -> jtag_uart_0:av_writedata
-	wire  [15:0] mm_interconnect_0_motor_0_avalon_slave_readdata;                     // motor_0:rpm_out -> mm_interconnect_0:motor_0_avalon_slave_readdata
+	wire  [31:0] mm_interconnect_0_motor_0_avalon_slave_readdata;                     // motor_0:rpm_out -> mm_interconnect_0:motor_0_avalon_slave_readdata
 	wire   [0:0] mm_interconnect_0_motor_0_avalon_slave_address;                      // mm_interconnect_0:motor_0_avalon_slave_address -> motor_0:avalon_slave_address
 	wire         mm_interconnect_0_motor_0_avalon_slave_read;                         // mm_interconnect_0:motor_0_avalon_slave_read -> motor_0:avalon_slave_read
 	wire         mm_interconnect_0_motor_0_avalon_slave_write;                        // mm_interconnect_0:motor_0_avalon_slave_write -> motor_0:avalon_slave_write
-	wire  [15:0] mm_interconnect_0_motor_0_avalon_slave_writedata;                    // mm_interconnect_0:motor_0_avalon_slave_writedata -> motor_0:speed
+	wire  [31:0] mm_interconnect_0_motor_0_avalon_slave_writedata;                    // mm_interconnect_0:motor_0_avalon_slave_writedata -> motor_0:speed
 	wire  [31:0] mm_interconnect_0_performance_counter_0_control_slave_readdata;      // performance_counter_0:readdata -> mm_interconnect_0:performance_counter_0_control_slave_readdata
 	wire   [3:0] mm_interconnect_0_performance_counter_0_control_slave_address;       // mm_interconnect_0:performance_counter_0_control_slave_address -> performance_counter_0:address
 	wire         mm_interconnect_0_performance_counter_0_control_slave_begintransfer; // mm_interconnect_0:performance_counter_0_control_slave_begintransfer -> performance_counter_0:begintransfer

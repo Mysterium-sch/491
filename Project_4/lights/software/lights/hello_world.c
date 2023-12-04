@@ -18,20 +18,23 @@ int main()
 {
 	time_t t;
 	srand((unsigned) time(&t));
-	alt_u32 motor_base;
-	motor_base = 0x0;
+	unsigned int motor_base = 0x0;
     float T_s = 0.1;
     float k_p = 1.0;
     float k_d = 0.1;
     float k_i = 0.01;
     float setpoint = 1000.0;  //speed in RPM
     int cycle = 0;
+//    char right[] = "right";
+//    char left[] = "left";
     //int cur_time = 0;
 
 	// global variables
 	pwm_frequency = 10e3f;
 	usleep (250000);
-	printf ("Program running New...\n");
+	//MOTOR_0_BASE
+	//IOWR(0x0,0,0.5);
+	printf ("Program running Motor...\n");
 
 	unsigned int prev_control_action_cycles = 0;
     float error = 0.0;
@@ -42,6 +45,8 @@ int main()
     while (1) {
     	//cur_time = cur_time+1;
         // Determine if we should perform control
+    	//The software should log the value of time, motor input, and motor speed and direction at 1/T_s Hz
+    	//sampling rate, and then dump this log to the terminal before the program ends.
         int cycle_counter = cycle;
         int cycles_since_last_control = cycle_counter - prev_control_action_cycles;
         float time_since_last_control = cycles_since_last_control / (float)pwm_frequency;
@@ -52,16 +57,27 @@ int main()
             float current_motor_rpm = IORD(motor_base,0);
 
             error_old = error;
-            error = current_motor_rpm - setpoint;
+            error = setpoint - current_motor_rpm;
             error_accum += error;
             error_delta = error - error_old;
 
             float motor_input = k_p * error + k_d * error_delta + k_i * error_accum;
             IOWR(motor_base,0,motor_input);
             prev_control_action_cycles = cycle_counter;
+
+//            printf("time: %i\n", cycle);
+        	printf("rpm: %3.2f\n", current_motor_rpm);
+//        	printf("input: %3.2f\n", motor_input);
+//        	if(motor_input > 0) {
+//        	    printf("dir: %3.2f\n", 0.0);
+//        	} else {
+//        		printf("dir: %3.2f\n", 1.0);
+//        	}
+
         }
         cycle = cycle +1;
-        if (cur_time > (int)time) {
+        if (cycle > 1000000) {
+            IOWR(motor_base,0,0);
         	break;
         }
 	}

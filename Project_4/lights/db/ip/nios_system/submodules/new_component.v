@@ -28,6 +28,7 @@ module new_component (
     reg [10:0] prev_edge_count;
 	 reg [0:0] dir;
 	 reg [15:0] rpm_hold;
+	 reg [15:0] set_speed;
 
     always @(posedge clk or posedge rst_reset) begin
         if (rst_reset) begin
@@ -39,12 +40,15 @@ module new_component (
             dir = 1'b0;
         end else begin
 		  
-            dir = speed[7];
+				if (avalon_slave_write) begin
+					set_speed <= speed;
+				end
+            dir = set_speed[12];
 
-            abs_speed = speed[7] ? (~speed[7:0] + 8'b1) : speed[7:0];
+            abs_speed = set_speed[12] ? (~set_speed[12:0] + 13'b1) : set_speed[12:0];
 
-            if (abs_speed > 11'h7FF) begin
-                abs_speed = 11'h7FF;
+            if (abs_speed > 13'hFFF) begin
+                abs_speed = 13'hFFF;
             end
 
             pwm_count = pwm_count + 1;
@@ -59,8 +63,8 @@ module new_component (
         end
     end
 	 
-	 assign  pwm_out[0] = (dir) ? pwm_count[10] : ~pwm_count[10];
-    assign  pwm_out[1] = (dir) ? ~pwm_count[10] : pwm_count[10];
+	 assign  pwm_out[0] = (dir) ? (pwm_count < abs_speed): 1'b0;
+    assign  pwm_out[1] = (~dir) ? (pwm_count < abs_speed) : 1'b0;
 	 assign rpm_out = rpm_hold;
 
 endmodule

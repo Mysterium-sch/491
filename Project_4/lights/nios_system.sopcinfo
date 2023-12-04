@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="nios_system" kind="nios_system" version="1.0" fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2023.11.30.10:50:27 -->
+ <!-- 2023.12.04.12:24:09 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1701359427</value>
+  <value>1701710649</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -2383,7 +2383,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="addressSpan">
     <type>java.math.BigInteger</type>
-    <value>4</value>
+    <value>8</value>
     <derived>true</derived>
     <enabled>true</enabled>
     <visible>false</visible>
@@ -2694,13 +2694,13 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>speed</name>
     <direction>Input</direction>
-    <width>16</width>
+    <width>32</width>
     <role>writedata</role>
    </port>
    <port>
     <name>rpm_out</name>
     <direction>Output</direction>
-    <width>16</width>
+    <width>32</width>
     <role>readdata</role>
    </port>
    <port>
@@ -5375,7 +5375,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="dataSlaveMapParam">
    <type>java.lang.String</type>
-   <value><![CDATA[<address-map><slave name='motor_0.avalon_slave' start='0x0' end='0x4' type='motor.avalon_slave' /><slave name='new_sdram_controller_0.s1' start='0x1000000' end='0x2000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x2000800' end='0x2001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='performance_counter_0.control_slave' start='0x2001000' end='0x2001040' type='altera_avalon_performance_counter.control_slave' /><slave name='key.s1' start='0x2001040' end='0x2001050' type='altera_avalon_pio.s1' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x2001050' end='0x2001058' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></value>
+   <value><![CDATA[<address-map><slave name='motor_0.avalon_slave' start='0x0' end='0x8' type='motor.avalon_slave' /><slave name='new_sdram_controller_0.s1' start='0x1000000' end='0x2000000' type='altera_avalon_new_sdram_controller.s1' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x2000800' end='0x2001000' type='altera_nios2_gen2.debug_mem_slave' /><slave name='performance_counter_0.control_slave' start='0x2001000' end='0x2001040' type='altera_avalon_performance_counter.control_slave' /><slave name='key.s1' start='0x2001040' end='0x2001050' type='altera_avalon_pio.s1' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x2001050' end='0x2001058' type='altera_avalon_jtag_uart.avalon_jtag_slave' /></address-map>]]></value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -6061,7 +6061,7 @@ parameters are a RESULT of the module parameters. -->
     <slaveName>avalon_slave</slaveName>
     <name>motor_0.avalon_slave</name>
     <baseAddress>0</baseAddress>
-    <span>4</span>
+    <span>8</span>
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>

@@ -1,6 +1,9 @@
-10:03:18 **** Clean-only build of configuration Nios II for project lights ****
-make clean 
-[lights clean complete]
+12:58:01 **** Incremental Build of configuration Nios II for project lights ****
+make all 
+Info: Building ../lights_bsp/
+make --no-print-directory -C ../lights_bsp/
+[BSP build complete]
+[lights build complete]
 
-10:03:18 Build Finished (took 109ms)
+12:58:01 Build Finished (took 270ms)
 

@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'nios_system'
  * SOPC Builder design path: ../../nios_system.sopcinfo
  *
- * Generated: Tue Nov 28 10:03:16 EST 2023
+ * Generated: Mon Dec 04 12:31:55 EST 2023
  */
 
 /*
@@ -251,7 +251,7 @@
 #define MOTOR_0_IRQ -1
 #define MOTOR_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define MOTOR_0_NAME "/dev/motor_0"
-#define MOTOR_0_SPAN 4
+#define MOTOR_0_SPAN 8
 #define MOTOR_0_TYPE "motor"
 
 
