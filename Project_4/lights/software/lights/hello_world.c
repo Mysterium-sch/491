@@ -13,6 +13,8 @@
 
 float pwm_frequency = 10e3f;
 float dim_period = 5.0f;
+int* ptr;
+int size = 1;
 
 int main()
 {
@@ -57,26 +59,27 @@ int main()
             float current_motor_rpm = IORD(motor_base,0);
 
             error_old = error;
-            error = setpoint - current_motor_rpm;
+            error = setpoint - current_motor_rpm - 4096;
             error_accum += error;
             error_delta = error - error_old;
 
             float motor_input = k_p * error + k_d * error_delta + k_i * error_accum;
+
             IOWR(motor_base,0,motor_input);
             prev_control_action_cycles = cycle_counter;
 
-//            printf("time: %i\n", cycle);
+            printf("time: %i\n", cycle);
         	printf("rpm: %3.2f\n", current_motor_rpm);
-//        	printf("input: %3.2f\n", motor_input);
-//        	if(motor_input > 0) {
-//        	    printf("dir: %3.2f\n", 0.0);
-//        	} else {
-//        		printf("dir: %3.2f\n", 1.0);
-//        	}
+        	printf("input: %3.2f\n", (motor_input));
+        	if(motor_input < 4096) {
+        	    printf("dir: %3.2f\n", 0.0);
+        	} else {
+        		printf("dir: %3.2f\n", 1.0);
+        	}
 
         }
         cycle = cycle +1;
-        if (cycle > 1000000) {
+        if (cycle > 2000000) {
             IOWR(motor_base,0,0);
         	break;
         }
