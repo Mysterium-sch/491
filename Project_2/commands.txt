@@ -9,6 +9,10 @@ start
 lights/software/lights
 LD_LIBRARY_PATH="/usr/local/3rdparty/altera/18.1/quartus/linux64" jtagd --config /usr/local/3rdparty/altera/18.1/quartus/linux64/pgm_parts.txt
 
+OR
+
+jtagd --config /usr/local/3rdparty/altera/18.1/quartus/linux64/pgm_parts.txt --user-start&
+
 outputfiles
 nios2-configure-sof lights.sof
 
